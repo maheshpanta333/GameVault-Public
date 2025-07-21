@@ -83,6 +83,6 @@ The **EnetPong** multiplayer mini-game uses a client–server model. To play loc
 ./mossserver    # listens on default port 1234
 ```
 and then launch NetPong from your launcher!
-If the game ends then wait for certain for the server to reset before joining again!
+If the game ends then wait for certain time for the server to reset before joining again!
 <br>
 ## Thank you for reviewing our project!!
