@@ -2,7 +2,7 @@
 
 # 🎮 GameVault – Mini-Game Arcade! 🚀
 
-> **Project Status:** Completed ✅
+> **Project Status:** Completed ✅<br>
 > **This is a public repo for the project!**
 
 Repository for our second semester college project — **GameVault**, a collection of mini‑games and puzzle games inspired by classic Flash game mechanics. This project is now fully completed and ready to play!
