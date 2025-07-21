@@ -1,0 +1,39 @@
+# pingpong/CMakeLists.txt
+# ==========================================================
+#  ‣ Builds the "tt" executable (Ping Pong game)
+#  ‣ Links to raygui_impl for GUI functionality
+#  ‣ Includes ENet support for potential multiplayer features
+# ==========================================================
+
+# Define the ping-pong executable
+add_executable(tt
+    ${CMAKE_SOURCE_DIR}/pingpong/ping_pong.cpp
+    ${CMAKE_SOURCE_DIR}/theme.cpp
+)
+
+# Header search paths
+target_include_directories(tt PRIVATE
+    ${CMAKE_SOURCE_DIR}/include
+    ${raygui_SOURCE_DIR}
+)
+
+# Link against core libraries
+target_link_libraries(tt PRIVATE
+    raylib
+    raygui
+    raygui_impl
+    ENet::ENet
+)
+
+# Windows system libraries (added only when building on Windows)
+if(WIN32)
+    target_link_libraries(tt PRIVATE
+        opengl32
+        gdi32
+        winmm
+        ws2_32    # Required for ENet on Windows
+    )
+endif()
+
+# Ensure shared assets are always present next to the executable
+add_dependencies(tt copy_assets)

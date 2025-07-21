@@ -1,0 +1,44 @@
+
+# snake/CMakeLists.txt
+# ==========================================================
+#  ‣ Builds the “Sarpa” executable (Snake game)
+#  ‣ Links to the single‐unit RayGui implementation library “raygui_impl”
+#  ‣ Uses ENet::ENet only if this game requires networking (remove if not)
+# ==========================================================
+
+# 1) Define the Snake executable and its sources
+add_executable(Sarpa
+    ${CMAKE_SOURCE_DIR}/snake/snake.cpp
+    ${CMAKE_SOURCE_DIR}/snake/game.cpp
+    ${CMAKE_SOURCE_DIR}/theme.cpp
+)
+
+# 2) Specify include directories
+target_include_directories(Sarpa PRIVATE
+    ${CMAKE_SOURCE_DIR}/include       # your project headers
+    ${raygui_SOURCE_DIR}               # raygui.h location from dependencies.cmake
+)
+
+# 3) Link libraries:
+#    - raylib        : core graphics/input/etc.
+#    - raygui_impl   : one‐time RayGui implementation built in root CMakeLists
+#    - ENet::ENet    : add only if Snake uses networking
+#    - Windows system libs
+target_link_libraries(Sarpa PRIVATE
+    raylib
+    raygui
+    raygui_impl
+    # ENet::ENet                # uncomment if Snake uses ENet
+)
+
+if (WIN32)
+    target_link_libraries(Sarpa PRIVATE
+        opengl32
+        gdi32
+        winmm
+        # ws2_32               # include if ENet is enabled
+    )
+endif()
+
+# 4) Ensure shared assets are present next to the executable
+add_dependencies(Sarpa copy_assets)

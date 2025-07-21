@@ -1,0 +1,48 @@
+# multiplayer/CMakeLists.txt
+# ==========================================================
+#  ‣ Builds the “mossclient” (client) and “mossserver” (server) executables
+#  ‣ Links to the one-time RayGui implementation library “raygui_impl”
+#  ‣ Links to ENet::ENet for networking support
+# ==========================================================
+
+# Shared include paths
+set(COMMON_INCLUDES
+    ${CMAKE_SOURCE_DIR}/include         # project headers
+    ${raygui_SOURCE_DIR}                # raygui.h from dependencies.cmake
+)
+
+# Shared libraries for networking targets
+set(COMMON_LIBS
+    raylib
+    raygui
+    raygui_impl
+    ENet::ENet
+)
+
+if(WIN32)
+    list(APPEND COMMON_LIBS
+        opengl32
+        gdi32
+        winmm
+        ws2_32      # Winsock for ENet
+    )
+endif()
+
+# ---- Client executable ----
+add_executable(mossclient
+    ${CMAKE_SOURCE_DIR}/multiplayer/gameclient.cpp
+    ${CMAKE_SOURCE_DIR}/multiplayer/clientpaddle.cpp
+)
+
+target_include_directories(mossclient PRIVATE ${COMMON_INCLUDES})
+target_link_libraries(mossclient PRIVATE ${COMMON_LIBS})
+add_dependencies(mossclient copy_assets)
+
+# ---- Server executable ----
+add_executable(mossserver
+    ${CMAKE_SOURCE_DIR}/multiplayer/gameserver.cpp
+)
+
+target_include_directories(mossserver PRIVATE ${COMMON_INCLUDES})
+target_link_libraries(mossserver PRIVATE ${COMMON_LIBS})
+add_dependencies(mossserver copy_assets)

@@ -1,0 +1,42 @@
+# Shrink_Shot/CMakeLists.txt
+# ==========================================================
+#  ‣ Builds the “shrinkpong” executable (Shrink Shot game)
+#  ‣ Links to the one-time RayGui implementation library “raygui_impl”
+#  ‣ Uses ENet only if this game needs networking (remove ENet::ENet if not)
+# ==========================================================
+
+# 1) Define the executable and its sources
+add_executable(shrinkpong
+    ${CMAKE_SOURCE_DIR}/Shrink_Shot/shrinkshot.cpp
+    ${CMAKE_SOURCE_DIR}/theme.cpp
+)
+
+# 2) Specify include directories
+target_include_directories(shrinkpong PRIVATE
+    ${CMAKE_SOURCE_DIR}/include       # your headers
+    ${raygui_SOURCE_DIR}               # raygui.h location from dependencies.cmake
+)
+
+# 3) Link libraries:
+#    - raylib        : core graphics/input/etc.
+#    - raygui_impl   : single compilation unit for raygui
+#    - ENet::ENet    : networking support (if used)
+#    - Windows system libs
+target_link_libraries(shrinkpong PRIVATE
+    raylib
+    raygui
+    raygui_impl
+    ENet::ENet       # remove this line if Shrink Shot is purely single-player
+)
+
+if (WIN32)
+    target_link_libraries(shrinkpong PRIVATE
+        opengl32
+        gdi32
+        winmm
+        ws2_32        # needed for ENet on Windows
+    )
+endif()
+
+# 4) Ensure the shared assets folder is copied before build
+add_dependencies(shrinkpong copy_assets)

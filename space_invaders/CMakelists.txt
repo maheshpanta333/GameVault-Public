@@ -1,0 +1,46 @@
+# space_invaders/CMakeLists.txt
+# ==========================================================
+#  ‣ Builds the “space_game” executable (Space Invaders)
+#  ‣ Links to the one-time RayGui implementation library “raygui_impl”
+#  ‣ No other file defines RAYGUI_IMPLEMENTATION
+# ==========================================================
+
+# 1) Define the Space Invaders executable and its sources
+add_executable(space_game
+    ${CMAKE_SOURCE_DIR}/space_invaders/alien.cpp
+    ${CMAKE_SOURCE_DIR}/space_invaders/block.cpp
+    ${CMAKE_SOURCE_DIR}/space_invaders/button.cpp
+    ${CMAKE_SOURCE_DIR}/space_invaders/game.cpp
+    ${CMAKE_SOURCE_DIR}/space_invaders/laser.cpp
+    ${CMAKE_SOURCE_DIR}/space_invaders/main.cpp
+    ${CMAKE_SOURCE_DIR}/space_invaders/mysteryship.cpp
+    ${CMAKE_SOURCE_DIR}/space_invaders/obstacle.cpp
+    ${CMAKE_SOURCE_DIR}/space_invaders/spaceship.cpp
+)
+
+# 2) Specify include directories
+target_include_directories(space_game PRIVATE
+    ${CMAKE_SOURCE_DIR}/include       # your project headers
+    ${raygui_SOURCE_DIR}               # raygui.h location from dependencies.cmake
+)
+
+# 3) Link libraries:
+#    - raylib        : core graphics/input/etc.
+#    - raygui_impl   : single‐unit RayGui implementation built in root CMakeLists
+#    - Windows system libs
+target_link_libraries(space_game PRIVATE
+    raylib
+    raygui
+    raygui_impl
+)
+
+if (WIN32)
+    target_link_libraries(space_game PRIVATE
+        opengl32
+        gdi32
+        winmm
+    )
+endif()
+
+# 4) Ensure shared assets are copied before building
+add_dependencies(space_game copy_assets)
