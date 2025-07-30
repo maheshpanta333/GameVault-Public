@@ -4,7 +4,10 @@ project(GameVault LANGUAGES CXX RC)
 # Use C++17
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
+if (WIN32)
+    add_compile_definitions(PLATFORM_DESKTOP)
+    set(PLATFORM "PLATFORM_DESKTOP" CACHE STRING "" FORCE)
+endif()
 # Default to Release if not specified
 if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
