@@ -10,14 +10,23 @@ if (NOT raylib_FOUND)
         URL https://github.com/raysan5/raylib/archive/refs/tags/${RAYLIB_VERSION}.tar.gz
         DOWNLOAD_EXTRACT_TIMESTAMP OFF
     )
+    
+    # Configure raylib build options FOR WINDOWS
     set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-    set(BUILD_GAMES OFF   CACHE BOOL "" FORCE)
+    set(BUILD_GAMES OFF CACHE BOOL "" FORCE)
     set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+    
+    # Windows-specific raylib configuration
+    if (WIN32)
+        set(SUPPORT_X11 OFF CACHE BOOL "" FORCE)
+        set(USE_EXTERNAL_GLFW OFF CACHE BOOL "" FORCE)
+        set(PLATFORM "Desktop" CACHE STRING "" FORCE)
+    endif()
+    
     FetchContent_MakeAvailable(raylib)
 else()
     message(STATUS "Using system raylib")
 endif()
-
 # Raygui: header-only, check for system installation first
 find_path(RAYGUI_INCLUDE_DIR
     NAMES raygui.h
