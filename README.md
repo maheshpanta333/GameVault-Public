@@ -74,6 +74,42 @@ cmake ..
 # Build all targets (games + server)
 cmake --build . --config Release
 ```
+## If cmake fails to get raylib and raygui due to some dependecies issue get it from mysys as follow before running the cmake file:
+
+```bash
+# 1) Open the folder where you have installed mysys it should most probably be in C:/
+# 2) Open either of the terminals(ucrt/mingw/clang)(choose the terminal which you used to get toolchain for C/C++ compiler) from inside the folder of mysys.
+
+# 3) For ucrt terminal give each of the following command one by one:
+pacman -Syu
+mingw-w64-ucrt-x86_64-raylib
+mingw-w64-ucrt-x86_64-raygui
+
+
+# 4) For mingw32 environment use following commands sequentially:
+pacman -Syu
+pacman -S mingw-w64-i686-raylib
+pacman -S mingw-w64-i686-raygui
+
+
+# 5) For mingw64 environment use the following commands:
+pacman -Syu
+pacman -S mingw-w64-x86_64-raylib
+pacman -S mingw-w64-x86_64-raygui
+
+
+# 6) For clang64 environement use the following:
+pacman -Syu
+mingw-w64-clang-x86_64-raylib
+mingw-w64-clang-x86_64-raygui
+
+# Then run the cmake
+mkdir build
+cd build
+cmake ..
+cmake --build . --config Release
+
+```
 ## ▶️ Running the EnetPong Multiplayer Game
 
 The **EnetPong** multiplayer mini-game uses a client–server model. To play locally or over LAN, follow these steps:
