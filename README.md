@@ -74,7 +74,7 @@ cmake ..
 # Build all targets (games + server)
 cmake --build . --config Release
 ```
-## If cmake fails to get raylib and raygui due to some dependecies issue get it from mysys as follow before running the cmake file:
+## If cmake fails to get raylib and raygui due to some dependecies issue get it from mysys as following before running the cmake file:
 
 ```bash
 # 1) Open the folder where you have installed mysys it should most probably be in C:/
